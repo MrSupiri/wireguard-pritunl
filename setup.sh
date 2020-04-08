@@ -1,10 +1,9 @@
-apt-get -y install wireguard curl
+tee /etc/apt/sources.list.d/pritunl.list << EOF
+deb http://repo.pritunl.com/stable/apt buster main
+EOF
 
-curl --silent "https://api.github.com/repos/pritunl/pritunl/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'
-
-PRITUNL_VERSION=$(curl --silent "https://api.github.com/repos/pritunl/pritunl/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
-
-curl -LJO "https://github.com/pritunl/pritunl/releases/download/${PRITUNL_VERSION}/pritunl_${PRITUNL_VERSION}-0debian1.buster_amd64.deb"
-dpkg -i "pritunl_${PRITUNL_VERSION}-0debian1.buster_amd64.deb"|| apt-get -f -y install
-rm "pritunl_${PRITUNL_VERSION}-0debian1.buster_amd64.deb"
-
+apt-get install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+apt-get update -y
+apt-get -y install pritunl
