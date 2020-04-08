@@ -4,7 +4,7 @@ LABEL MAINTAINER="Isala Piyarisi <hello@isala.me>"
 
 COPY . .
 
-RUN apt-get update && apt-get install -y wireguard curl procps
+RUN apt-get update && apt-get install -y wireguard curl procps iptables
 
 RUN bash setup.sh
 
