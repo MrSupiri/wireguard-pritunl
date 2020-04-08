@@ -1,3 +1,16 @@
+#!/bin/sh
+# https://github.com/jippi/docker-pritunl
+set -e
+
+[ -d /dev/net ] ||
+    mkdir -p /dev/net
+[ -c /dev/net/tun ] ||
+    mknod /dev/net/tun c 10 200
+
+touch /var/log/pritunl.log
+touch /var/run/pritunl.pid
+/bin/rm /var/run/pritunl.pid
+
 cat << EOF > /etc/pritunl.conf
     {
         "mongodb_uri": "$MONGODB_URI",
